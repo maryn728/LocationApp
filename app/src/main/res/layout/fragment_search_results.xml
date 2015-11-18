@@ -98,12 +98,17 @@
                 android:layout_alignTop="@+id/longitude_label"
                 android:layout_alignLeft="@+id/latitude_value" />
 
+            <Button
+                android:id="@+id/view_map_button"
+                android:text="@string/view_map"
+                android:onClick="onOpenMapEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/longitude_label"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"/>
+
         </RelativeLayout>
     </ScrollView>
-    <Button
-        android:id="@+id/view_map_button"
-        android:text="@string/view_map"
-        android:onClick="onOpenMapEvent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
 </LinearLayout>

@@ -90,12 +90,18 @@ public class CountryInfoActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
 
-            ((SearchResultsFragment)getFragmentManager().findFragmentById(R.id.search_results_fragment)).update(location);
-            FragmentManager fm = getFragmentManager();
-            fm.beginTransaction()
-                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                    .show(fm.findFragmentById(R.id.search_results_fragment))
-                    .commit();
+            // Validate REST service response
+            if(location != null) {
+                ((SearchResultsFragment)getFragmentManager().findFragmentById(R.id.search_results_fragment)).update(location);
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .show(fm.findFragmentById(R.id.search_results_fragment))
+                        .commit();
+            } else {
+                Toast.makeText(getApplicationContext(), mIp + " is not a valid IP address or domain", Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 }

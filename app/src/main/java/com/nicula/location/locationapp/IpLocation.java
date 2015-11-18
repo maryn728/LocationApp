@@ -2,6 +2,9 @@ package com.nicula.location.locationapp;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 
+/**
+ * To be used for mapping JSON response from "https://freegeoip.net"
+ */
 public class IpLocation {
 
     private String ip;
@@ -113,6 +116,47 @@ public class IpLocation {
 
     public void setMetroCode(int metroCode) {
         this.metroCode = metroCode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof IpLocation)) return false;
+
+        IpLocation that = (IpLocation) o;
+
+        if (Double.compare(that.latitude, latitude) != 0) return false;
+        if (Double.compare(that.longitude, longitude) != 0) return false;
+        if (metroCode != that.metroCode) return false;
+        if (!ip.equals(that.ip)) return false;
+        if (!countryCode.equals(that.countryCode)) return false;
+        if (!countryName.equals(that.countryName)) return false;
+        if (!regionCode.equals(that.regionCode)) return false;
+        if (!regionName.equals(that.regionName)) return false;
+        if (!city.equals(that.city)) return false;
+        if (!zipCode.equals(that.zipCode)) return false;
+        return timeZone.equals(that.timeZone);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = ip.hashCode();
+        result = 31 * result + countryCode.hashCode();
+        result = 31 * result + countryName.hashCode();
+        result = 31 * result + regionCode.hashCode();
+        result = 31 * result + regionName.hashCode();
+        result = 31 * result + city.hashCode();
+        result = 31 * result + zipCode.hashCode();
+        result = 31 * result + timeZone.hashCode();
+        temp = Double.doubleToLongBits(latitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(longitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + metroCode;
+        return result;
     }
 
     @Override
