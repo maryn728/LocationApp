@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/list_row_selector"
+    android:padding="8dp" >
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="8dp"
+        android:textSize="@dimen/name"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/units"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name"
+        android:layout_marginTop="1dip"
+        android:textSize="@dimen/units" />
+
+    <TextView
+        android:id="@+id/subtheme"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/units"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/subtheme"
+        android:textSize="@dimen/subtheme" />
+
+    <TextView
+        android:id="@+id/time_interval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/subtheme"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/time_interval"
+        android:textSize="@dimen/time_interval" />
+
+</RelativeLayout>

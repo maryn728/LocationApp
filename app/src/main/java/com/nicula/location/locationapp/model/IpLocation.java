@@ -1,11 +1,13 @@
-package com.nicula.location.locationapp;
+package com.nicula.location.locationapp.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+
+import java.io.Serializable;
 
 /**
  * To be used for mapping JSON response from "https://freegeoip.net"
  */
-public class IpLocation {
+public class IpLocation implements Serializable {
 
     private String ip;
     private String countryCode;
@@ -134,8 +136,7 @@ public class IpLocation {
         if (!regionCode.equals(that.regionCode)) return false;
         if (!regionName.equals(that.regionName)) return false;
         if (!city.equals(that.city)) return false;
-        if (!zipCode.equals(that.zipCode)) return false;
-        return timeZone.equals(that.timeZone);
+        return !zipCode.equals(that.zipCode) ? false : timeZone.equals(that.timeZone);
 
     }
 

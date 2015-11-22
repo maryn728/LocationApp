@@ -1,8 +1,6 @@
 package com.nicula.location.locationapp;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nicula.location.locationapp.model.IpLocation;
+
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,11 +21,13 @@ public class CountryInfoActivity extends AppCompatActivity {
 
     private EditText mIpView;
     private HttpRequestTask mHttpRequestTask = null;
+    private IpLocation mLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_info);
+
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction()
                 .hide(fm.findFragmentById(R.id.search_results_fragment))
@@ -45,11 +47,41 @@ public class CountryInfoActivity extends AppCompatActivity {
 
     public void onOpenMapEvent(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
-        double latitude = Double.parseDouble(((TextView) findViewById(R.id.latitude_value)).getText().toString());
-        double longitude = Double.parseDouble(((TextView) findViewById(R.id.longitude_value)).getText().toString());
-        intent.putExtra("latitude", latitude);
-        intent.putExtra("longitude", longitude);
+        intent.putExtra("latitude", mLocation.getLatitude());
+        intent.putExtra("longitude", mLocation.getLongitude());
         startActivity(intent);
+    }
+
+    public void onClickVariablesButtonEvent(View view) {
+        Intent intent = new Intent(this, VariablesActivity.class);
+        intent.putExtra("countryCode", mLocation.getCountryCode());
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        outState.putSerializable("location", mLocation);
+        outState.putString("ip", mIpView.getText().toString());
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        mLocation = (IpLocation) savedInstanceState.getSerializable("location");
+        if(mLocation != null) {
+            mIpView.setText(savedInstanceState.getString("ip"));
+            ((SearchResultsFragment) getFragmentManager().findFragmentById(R.id.search_results_fragment))
+                    .update((IpLocation) savedInstanceState.getSerializable("location"));
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction()
+                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .show(fm.findFragmentById(R.id.search_results_fragment))
+                    .commit();
+        }
     }
 
     private class HttpRequestTask extends AsyncTask<Void, Void, IpLocation> {
@@ -74,7 +106,7 @@ public class CountryInfoActivity extends AppCompatActivity {
             IpLocation location = null;
             try {
                 // Make RESTful web service call using RestTemplate object
-                final String url = "https://freegeoip.net/json/" + mIp;
+                final String url = getResources().getString(R.string.location_service) + mIp;
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 location = restTemplate.getForObject(url, IpLocation.class);
@@ -92,6 +124,7 @@ public class CountryInfoActivity extends AppCompatActivity {
 
             // Validate REST service response
             if(location != null) {
+                mLocation = location;
                 ((SearchResultsFragment)getFragmentManager().findFragmentById(R.id.search_results_fragment)).update(location);
                 FragmentManager fm = getFragmentManager();
                 fm.beginTransaction()

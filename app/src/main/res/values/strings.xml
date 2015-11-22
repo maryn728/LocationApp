@@ -28,4 +28,14 @@
     <string name="view_map">View Map</string>
     <string name="title_activity_maps">Map</string>
     <string name="location">This is your location</string>
+    <string name="show_variables">View Variables</string>
+
+    <!-- Strings related to web services -->
+    <string name="location_service">https://freegeoip.net/json/</string>
+    <string name="variables_service">http://geodata.grid.unep.ch/api/</string>
+
+    <!-- Activity titles -->
+    <string name="login_activity_title">Login</string>
+    <string name="variables_activity_title">Variables</string>
+    <string name="country_info_activity_title">Find Location</string>
 </resources>
