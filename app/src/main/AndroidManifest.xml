@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nicula.location.locationapp" >
+    package="ro.dam.project.locationapp" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -18,23 +18,17 @@
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/iconip"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-
             android:name=".LoginActivity"
             android:label="@string/login_activity_title" >
-            <intent-filter android:label="@string/app_name">
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".CountryInfoActivity"
-            android:label="@string/country_info_activity_title">
+            android:label="@string/country_info_activity_title" >
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -53,13 +47,30 @@
             android:label="@string/title_activity_maps" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nicula.location.locationapp.CountryInfoActivity" />
+                android:value="ro.dam.project.locationapp.CountryInfoActivity" />
         </activity>
         <activity
             android:name=".VariablesActivity"
-            android:label="@string/variables_activity_title">
+            android:label="@string/variables_activity_title" >
         </activity>
         <activity android:name=".ChartActivity" >
+        </activity>
+        <activity
+            android:name=".CountryDetailsActivity"
+            android:label="@string/countryDetails" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".HistoryActivity" >
+        </activity>
+        <activity android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter android:label="@string/app_name" >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

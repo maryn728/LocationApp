@@ -120,6 +120,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <Button
+                    android:id="@+id/get_country_info"
+                    android:text="@string/get_country_info"
+                    android:onClick="onGetCountryInfoEvent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
         </RelativeLayout>

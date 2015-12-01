@@ -1,7 +1,5 @@
-package com.nicula.location.locationapp;
+package ro.dam.project.locationapp;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;

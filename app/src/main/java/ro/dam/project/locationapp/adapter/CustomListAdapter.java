@@ -1,4 +1,4 @@
-package com.nicula.location.locationapp.adapter;
+package ro.dam.project.locationapp.adapter;
 
 
 import android.app.Activity;
@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.nicula.location.locationapp.ChartActivity;
-import com.nicula.location.locationapp.R;
-import com.nicula.location.locationapp.model.Variable;
+import ro.dam.project.locationapp.ChartActivity;
+import ro.dam.project.locationapp.R;
+import ro.dam.project.locationapp.model.Variable;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.nicula.location.locationapp.model;
+package ro.dam.project.locationapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

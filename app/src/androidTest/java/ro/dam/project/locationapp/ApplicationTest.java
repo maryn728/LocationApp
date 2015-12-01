@@ -1,4 +1,4 @@
-package com.nicula.location.locationapp;
+package ro.dam.project.locationapp;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

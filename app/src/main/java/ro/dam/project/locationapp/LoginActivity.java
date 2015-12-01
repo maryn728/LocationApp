@@ -1,10 +1,13 @@
-package com.nicula.location.locationapp;
+package ro.dam.project.locationapp;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -15,6 +18,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,13 +43,16 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import ro.dam.project.locationapp.dao.UserDAO;
+import ro.dam.project.locationapp.model.User;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>,
-        GoogleApiClient.OnConnectionFailedListener, OnClickListener  {
+        GoogleApiClient.OnConnectionFailedListener, OnClickListener {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -74,12 +81,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // GoogleApiClient instance
     GoogleApiClient mGoogleApiClient;
 
+    private UserDAO userDAO;
+    private User user = null;
+    private User userInserted = null;
+    private User userT = null;
+
     private static final int RC_SIGN_IN = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        userDAO = new UserDAO(getApplicationContext());
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -191,9 +205,43 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    /**
+     * To be used for retrieving google accounts
+     *
+     * @param accountManager
+     * @return
+     */
+    private static Account getAccount(AccountManager accountManager) {
+        Account[] accounts = accountManager.getAccountsByType("com.google");
+        Account account;
+        if (accounts.length > 0) {
+            account = accounts[0];
+        } else {
+            account = null;
+        }
+        return account;
+    }
+
     private void updateUI(boolean update) {
-        if(update) {
-            Intent intent = new Intent(this, CountryInfoActivity.class);
+        if (update) {
+
+            Account account = getAccount(AccountManager.get(getApplicationContext()));
+            String email = account.name;
+            user = userDAO.verifyIfUserExistsInBd(email);
+
+            //insert new user in db if it isn't already in db
+            if (user == null) {
+                userInserted = userDAO.insertUser("", "", email, "", "");
+                userT = userInserted;
+                Log.i("Google User inserted", userInserted.toString() + "");
+            } else {
+                userT = user;
+                Log.i("G User already inserted", user.toString() + "");
+            }
+
+
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra("userId", userT.getIdUser());
             startActivity(intent);
             finish();
         } else {
@@ -245,11 +293,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            String userEmail = mEmailView.getText().toString();
+            String userPass = mPasswordView.getText().toString();
+
+            user = userDAO.verifyUserAndPassword(userEmail, userPass);
+
+            if (user != null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+                builder.setTitle("Successful login!");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                        i.putExtra("userId", user.getIdUser());
+                        startActivity(i);
+                        finish();
+                    }
+                });
+                builder.create().show();
+
+            } else {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+
+                builder1.setTitle("Incorrect data!");
+                builder1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog2, int id) {
+                        dialog2.cancel();
+                    }
+                });
+                builder1.create().show();
+            }
         }
     }
 

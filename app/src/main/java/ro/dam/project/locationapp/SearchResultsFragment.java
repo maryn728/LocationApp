@@ -1,4 +1,4 @@
-package com.nicula.location.locationapp;
+package ro.dam.project.locationapp;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.nicula.location.locationapp.model.IpLocation;
+import ro.dam.project.locationapp.model.IpLocation;
 
 
 public class SearchResultsFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.nicula.location.locationapp;
+package ro.dam.project.locationapp;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -10,23 +10,21 @@ import android.widget.Toast;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.nicula.location.locationapp.adapter.CustomListAdapter;
-import com.nicula.location.locationapp.model.Data;
-import com.nicula.location.locationapp.model.Variable;
+import ro.dam.project.locationapp.model.Data;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ChartActivity extends AppCompatActivity {
+
+    private static final String TAG = "ChartActivity";
 
     // Data set for generating chart
     private List<Data> mData = null;
@@ -158,7 +156,7 @@ public class ChartActivity extends AppCompatActivity {
                 Data[] dataArray = restTemplate.getForObject(url, Data[].class);
                 data = new ArrayList<>(Arrays.asList(dataArray));
             } catch (Exception e) {
-                Log.e("ChartActivity", e.getMessage(), e);
+                Log.e(TAG, e.getMessage(), e);
             }
             return data;
         }

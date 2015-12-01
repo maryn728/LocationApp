@@ -29,6 +29,9 @@
     <string name="title_activity_maps">Map</string>
     <string name="location">This is your location</string>
     <string name="show_variables">View Variables</string>
+    <string name="btnSearchIp">Find IP Address Geolocation</string>
+    <string name="btnHistory">History of IP addresses</string>
+    <string name="get_country_info">Country Info</string>
 
     <!-- Strings related to web services -->
     <string name="location_service">https://freegeoip.net/json/</string>
@@ -38,4 +41,6 @@
     <string name="login_activity_title">Login</string>
     <string name="variables_activity_title">Variables</string>
     <string name="country_info_activity_title">Find Location</string>
+    <string name="title_activity_home">Menu</string>
+    <string name="countryDetails">Country Details</string>
 </resources>

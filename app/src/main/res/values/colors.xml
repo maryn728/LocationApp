@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="dpurple">#90d4d3de</color>
+    <color name="darkpurple">#ad1a1460</color>
+
     <!-- Custom ListAdapter colors -->
     <color name="subtheme">#666666</color>
     <color name="time_interval">#888888</color>

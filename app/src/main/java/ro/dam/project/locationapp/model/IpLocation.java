@@ -1,4 +1,4 @@
-package com.nicula.location.locationapp.model;
+package ro.dam.project.locationapp.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 

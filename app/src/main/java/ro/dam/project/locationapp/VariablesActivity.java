@@ -1,4 +1,4 @@
-package com.nicula.location.locationapp;
+package ro.dam.project.locationapp;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -8,8 +8,8 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.nicula.location.locationapp.adapter.CustomListAdapter;
-import com.nicula.location.locationapp.model.Variable;
+import ro.dam.project.locationapp.adapter.CustomListAdapter;
+import ro.dam.project.locationapp.model.Variable;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class VariablesActivity extends AppCompatActivity {
+
+    private final static String TAG = "VariablesActivity";
 
     // ListView reference
     private ListView mVariableListView;
@@ -93,7 +95,7 @@ public class VariablesActivity extends AppCompatActivity {
                 Variable[] variableArray = restTemplate.getForObject(url, Variable[].class);
                 variables = new ArrayList<>(Arrays.asList(variableArray));
             } catch (Exception e) {
-                Log.e("VariablesActivity", e.getMessage(), e);
+                Log.e(TAG, e.getMessage(), e);
             }
             return variables;
         }

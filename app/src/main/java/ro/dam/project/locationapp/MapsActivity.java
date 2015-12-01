@@ -1,6 +1,5 @@
-package com.nicula.location.locationapp;
+package ro.dam.project.locationapp;
 
-import android.provider.SyncStateContract;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
